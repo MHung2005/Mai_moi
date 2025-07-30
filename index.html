@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Mai Mối - MVP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-4 max-w-2xl">
+        <h1 class="text-3xl font-bold text-center mb-8">Ứng Dụng Mai Mối</h1>
+
+        <!-- Giai đoạn 1: Điền thông tin cá nhân -->
+        <div id="personal-info" class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold mb-4">Giai đoạn 1: Thông tin cá nhân</h2>
+            <div class="space-y-4">
+                <input id="name" type="text" placeholder="Họ và tên" class="w-full p-2 border rounded">
+                <input id="age" type="number" placeholder="Tuổi" class="w-full p-2 border rounded">
+                <select id="gender" class="w-full p-2 border rounded">
+                    <option value="">Giới tính</option>
+                    <option value="male">Nam</option>
+                    <option value="female">Nữ</option>
+                    <option value="other">Khác</option>
+                </select>
+                <textarea id="bio" placeholder="Giới thiệu bản thân" class="w-full p-2 border rounded"></textarea>
+                <button onclick="submitPersonalInfo()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Gửi thông tin</button>
+            </div>
+        </div>
+
+        <!-- Giai đoạn 2: Đặt lịch phỏng vấn -->
+        <div id="interview-schedule" class="bg-white p-6 rounded-lg shadow-md mb-6 hidden">
+            <h2 class="text-xl font-semibold mb-4">Giai đoạn 2: Đặt lịch phỏng vấn</h2>
+            <div class="space-y-4">
+                <input id="interview-date" type="date" class="w-full p-2 border rounded">
+                <input id="interview-time" type="time" class="w-full p-2 border rounded">
+                <button onclick="scheduleInterview()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Xác nhận lịch phỏng vấn</button>
+            </div>
+        </div>
+
+        <!-- Giai đoạn 3: Đặt lịch hẹn hò -->
+        <div id="date-schedule" class="bg-white p-6 rounded-lg shadow-md mb-6 hidden">
+            <h2 class="text-xl font-semibold mb-4">Giai đoạn 3: Đặt lịch hẹn hò</h2>
+            <div class="space-y-4">
+                <p class="text-gray-600">Địa điểm sẽ được chúng tôi sắp xếp sau.</p>
+                <input id="date-date" type="date" class="w-full p-2 border rounded">
+                <input id="date-time" type="time" class="w-full p-2 border rounded">
+                <button onclick="scheduleDate()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Xác nhận lịch hẹn hò</button>
+            </div>
+        </div>
+
+        <!-- Thông báo -->
+        <div id="notification" class="hidden p-4 rounded-lg text-white"></div>
+    </div>
+
+    <script>
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `p-4 rounded-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+            notification.classList.remove('hidden');
+            setTimeout(() => notification.classList.add('hidden'), 3000);
+        }
+
+        function submitPersonalInfo() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const bio = document.getElementById('bio').value;
+
+            if (name && age && gender && bio) {
+                document.getElementById('personal-info').classList.add('hidden');
+                document.getElementById('interview-schedule').classList.remove('hidden');
+                showNotification('Thông tin cá nhân đã được gửi thành công!', 'success');
+            } else {
+                showNotification('Vui lòng điền đầy đủ thông tin!', 'error');
+            }
+        }
+
+        function scheduleInterview() {
+            const date = document.getElementById('interview-date').value;
+            const time = document.getElementById('interview-time').value;
+
+            if (date && time) {
+                document.getElementById('interview-schedule').classList.add('hidden');
+                document.getElementById('date-schedule').classList.remove('hidden');
+                showNotification('Lịch phỏng vấn đã được đặt thành công!', 'success');
+            } else {
+                showNotification('Vui lòng chọn ngày và giờ phỏng vấn!', 'error');
+            }
+        }
+
+        function scheduleDate() {
+            const date = document.getElementById('date-date').value;
+            const time = document.getElementById('date-time').value;
+
+            if (date && time) {
+                showNotification('Lịch hẹn hò đã được đặt thành công! Địa điểm sẽ được thông báo sau.', 'success');
+                setTimeout(() => {
+                    document.getElementById('date-schedule').classList.add('hidden');
+                    document.getElementById('personal-info').classList.remove('hidden');
+                    document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+                }, 2000);
+            } else {
+                showNotification('Vui lòng chọn ngày và giờ hẹn hò!', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
