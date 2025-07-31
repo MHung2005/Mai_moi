@@ -5,74 +5,184 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Mai Mối - MVP</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3e8ff 100%);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+        }
+        input, select, textarea {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+        }
+        .btn {
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="container mx-auto p-4 max-w-2xl">
-        <h1 class="text-3xl font-bold text-center mb-8">Ứng Dụng Mai Mối</h1>
+<body>
+    <div class="container mx-auto p-6 max-w-3xl relative">
+        <!-- Header with decorative icon -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800 flex items-center justify-center gap-2">
+                <i class="fas fa-heart text-red-500"></i> Ứng Dụng Mai Mối
+            </h1>
+            <p class="text-gray-600 mt-2">Tìm kiếm một nửa hoàn hảo của bạn!</p>
+        </div>
 
         <!-- Giai đoạn 1: Điền thông tin cá nhân -->
-        <div id="personal-info" class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-semibold mb-4">Giai đoạn 1: Thông tin cá nhân</h2>
-            <div class="space-y-4">
-                <input id="name" type="text" placeholder="Họ và tên" class="w-full p-2 border rounded">
-                <input id="age" type="number" placeholder="Tuổi" class="w-full p-2 border rounded">
-                <select id="gender" class="w-full p-2 border rounded">
+        <div id="personal-info" class="card p-8 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-user text-blue-500"></i> Giai đoạn 1: Thông tin cá nhân
+            </h2>
+            <div class="space-y-5">
+                <input id="name" type="text" placeholder="Họ và tên" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="age" type="number" placeholder="Tuổi" class="w-full p-3 border border-gray-300 rounded-lg">
+                <select id="gender" class="w-full p-3 border border-gray-300 rounded-lg">
                     <option value="">Giới tính</option>
                     <option value="male">Nam</option>
                     <option value="female">Nữ</option>
                     <option value="other">Khác</option>
                 </select>
-                <textarea id="bio" placeholder="Giới thiệu bản thân" class="w-full p-2 border rounded"></textarea>
-                <button onclick="submitPersonalInfo()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Gửi thông tin</button>
+                <textarea id="bio" placeholder="Giới thiệu bản thân" class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
+                <!-- Bộ câu hỏi -->
+                <input id="birthdate" type="text" placeholder="Ngày tháng năm sinh ? (Định dạng: dd/mm/yyyy)" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="hometown" type="text" placeholder="Nơi sinh sống ? (Quê quán)" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="job" type="text" placeholder="Nghề nghiệp ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="income" type="text" placeholder="Thu nhập ? (Ví dụ: 10 triệu/tháng)" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="cccd" type="text" placeholder="Số CCCD ? (Nếu có thể cung cấp)" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="education" type="text" placeholder="Trình độ học vấn ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="marital_status" type="text" placeholder="Tình trạng hôn nhân ? (Độc thân, đã kết hôn, v.v.)" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="family" type="text" placeholder="Bạn đã từng có bao nhiêu mối tình ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="parents" type="text" placeholder="Bạn có mắc căn bệnh mãn tính, dị tật bẩm sinh gì hay không ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <div class="w-full">
+                    <label for="portrait" class="block text-sm font-medium text-gray-700 mb-2">Ảnh chân dung ?</label>
+                    <input id="portrait" type="file" accept="image/*" class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+                <input id="smoking" type="text" placeholder="Tôn giáo ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="drinking" type="text" placeholder="Dân tộc ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="height_weight" type="text" placeholder="Chiều cao, cân nặng ?" class="w-full p-3 border border-gray-300 rounded-lg">
+            
+                <input id="strengths" type="text" placeholder="Bạn tự đánh giá điểm mạnh của bản thân là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="weaknesses" type="text" placeholder="Điểm yếu của bạn là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="hobbies" type="text" placeholder="Sở thích, thú vui của bạn là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="partner_wishes" type="text" placeholder="Theo bạn, những mong muốn của bạn với nửa kia là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <textarea id="philosophy" placeholder="Những triết lý, quan điểm của bạn trong hôn nhân, tình yêu và gia đình là gì ?" class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
+                <input id="habits" type="text" placeholder="Bạn có những thói quen đặc biệt nào mà mong muốn nửa kia chấp nhận (hút thuốc, ăn chay...) ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <textarea id="relationship_history" placeholder="Bạn đã từng trải qua mối quan hệ nghiêm túc chưa? Nếu có, bạn có thể chia sẻ cho chúng tôi một cách ngắn gọn lý do đổ vỡ hay không ?" class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
+                <select id="marriage_readiness" class="w-full p-3 border border-gray-300 rounded-lg">
+                    <option value="">Hiện tại, bạn đã sẵn sàng với hôn nhân hay chưa?</option>
+                    <option value="1">Hoàn toàn chưa sẵn sàng</option>
+                    <option value="2">Ít sẵn sàng</option>
+                    <option value="3">Đang cân nhắc</option>
+                    <option value="4">Gần như sẵn sàng</option>
+                    <option value="5">Hoàn toàn sẵn sàng</option>
+                </select>
+                <textarea id="dream_partner" placeholder="Hãy mô tả nửa kia trong mơ của bạn." class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
+                <button onclick="submitPersonalInfo()" class="w-full btn text-white p-3 rounded-lg font-semibold">Gửi thông tin</button>
             </div>
         </div>
 
         <!-- Giai đoạn 2: Đặt lịch phỏng vấn -->
-        <div id="interview-schedule" class="bg-white p-6 rounded-lg shadow-md mb-6 hidden">
-            <h2 class="text-xl font-semibold mb-4">Giai đoạn 2: Đặt lịch phỏng vấn</h2>
-            <div class="space-y-4">
-                <input id="interview-date" type="date" class="w-full p-2 border rounded">
-                <input id="interview-time" type="time" class="w-full p-2 border rounded">
-                <button onclick="scheduleInterview()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Xác nhận lịch phỏng vấn</button>
+        <div id="interview-schedule" class="card p-8 mb-8 hidden">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-calendar-check text-blue-500"></i> Giai đoạn 2: Đặt lịch phỏng vấn
+            </h2>
+            <div class="space-y-5">
+                <input id="interview-date" type="date" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="interview-time" type="time" class="w-full p-3 border border-gray-300 rounded-lg">
+                <button onclick="scheduleInterview()" class="w-full btn text-white p-3 rounded-lg font-semibold">Xác nhận lịch phỏng vấn</button>
             </div>
         </div>
 
         <!-- Giai đoạn 3: Đặt lịch hẹn hò -->
-        <div id="date-schedule" class="bg-white p-6 rounded-lg shadow-md mb-6 hidden">
-            <h2 class="text-xl font-semibold mb-4">Giai đoạn 3: Đặt lịch hẹn hò</h2>
-            <div class="space-y-4">
-                <p class="text-gray-600">Địa điểm sẽ được chúng tôi sắp xếp sau.</p>
-                <input id="date-date" type="date" class="w-full p-2 border rounded">
-                <input id="date-time" type="time" class="w-full p-2 border rounded">
-                <button onclick="scheduleDate()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Xác nhận lịch hẹn hò</button>
+        <div id="date-schedule" class="card p-8 mb-8 hidden">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-heartbeat text-red-500"></i> Giai đoạn 3: Đặt lịch hẹn hò
+            </h2>
+            <div class="space-y-5">
+                <p class="text-gray-600 flex items-center gap-2">
+                    <i class="fas fa-map-marker-alt text-blue-500"></i> Địa điểm sẽ được chúng tôi sắp xếp sau.
+                </p>
+                <input id="date-date" type="date" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="date-time" type="time" class="w-full p-3 border border-gray-300 rounded-lg">
+                <button onclick="scheduleDate()" class="w-full btn text-white p-3 rounded-lg font-semibold">Xác nhận lịch hẹn hò</button>
             </div>
         </div>
 
         <!-- Thông báo -->
-        <div id="notification" class="hidden p-4 rounded-lg text-white"></div>
+        <div id="notification" class="hidden p-4 rounded-lg text-white fixed bottom-4 right-4 shadow-lg"></div>
     </div>
 
     <script>
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
-            notification.className = `p-4 rounded-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+            notification.className = `p-4 rounded-lg text-white fixed bottom-4 right-4 shadow-lg ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
             notification.classList.remove('hidden');
             setTimeout(() => notification.classList.add('hidden'), 3000);
         }
 
         function submitPersonalInfo() {
+            console.log("Starting submitPersonalInfo");
             const name = document.getElementById('name').value;
             const age = document.getElementById('age').value;
             const gender = document.getElementById('gender').value;
             const bio = document.getElementById('bio').value;
+            const birthdate = document.getElementById('birthdate').value;
+            const hometown = document.getElementById('hometown').value;
+            const job = document.getElementById('job').value;
+            const income = document.getElementById('income').value;
+            const cccd = document.getElementById('cccd').value;
+            const education = document.getElementById('education').value;
+            const marital_status = document.getElementById('marital_status').value;
+            const family = document.getElementById('family').value;
+            const parents = document.getElementById('parents').value;
+            const portrait = document.getElementById('portrait').files.length > 0;
+            const smoking = document.getElementById('smoking').value;
+            const drinking = document.getElementById('drinking').value;
+            const height_weight = document.getElementById('height_weight').value;
+            const strengths = document.getElementById('strengths').value;
+            const weaknesses = document.getElementById('weaknesses').value;
+            const hobbies = document.getElementById('hobbies').value;
+            const partner_wishes = document.getElementById('partner_wishes').value;
+            const philosophy = document.getElementById('philosophy').value;
+            const habits = document.getElementById('habits').value;
+            const relationship_history = document.getElementById('relationship_history').value;
+            const marriage_readiness = document.getElementById('marriage_readiness').value;
+            const dream_partner = document.getElementById('dream_partner').value;
 
-            if (name && age && gender && bio) {
+            console.log({
+                name, age, gender, bio, birthdate, hometown, job, income, cccd, education,
+                marital_status, family, parents, portrait, smoking, drinking, height_weight,
+                strengths, weaknesses, hobbies, partner_wishes, philosophy, habits,
+                relationship_history, marriage_readiness, dream_partner
+            });
+
+            if (name && age && gender && bio && birthdate && hometown && job && income && cccd && education && marital_status && family && parents && portrait && smoking && drinking && height_weight && strengths && weaknesses && hobbies && partner_wishes && philosophy && habits && relationship_history && marriage_readiness && dream_partner) {
                 document.getElementById('personal-info').classList.add('hidden');
                 document.getElementById('interview-schedule').classList.remove('hidden');
                 showNotification('Thông tin cá nhân đã được gửi thành công!', 'success');
             } else {
-                showNotification('Vui lòng điền đầy đủ thông tin!', 'error');
+                showNotification('Vui lòng điền đầy đủ thông tin, bao gồm tải lên ảnh chân dung!', 'error');
             }
         }
 
@@ -99,6 +209,7 @@
                     document.getElementById('date-schedule').classList.add('hidden');
                     document.getElementById('personal-info').classList.remove('hidden');
                     document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+                    document.getElementById('portrait').value = ''; // Reset file input
                 }, 2000);
             } else {
                 showNotification('Vui lòng chọn ngày và giờ hẹn hò!', 'error');
