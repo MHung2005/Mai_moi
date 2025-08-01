@@ -8,107 +8,169 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3e8ff 100%);
+            background: linear-gradient(135deg, #fef3f8 0%, #d6eaff 100%);
             font-family: 'Inter', sans-serif;
+            min-height: 100vh;
         }
         .card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
         }
         input, select, textarea {
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+            border-color: #ec4899;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
         }
         .btn {
-            background: linear-gradient(to right, #3b82f6, #60a5fa);
-            transition: background 0.3s ease;
+            background: linear-gradient(to right, #ec4899, #f472b6);
+            transition: all 0.3s ease;
         }
         .btn:hover {
-            background: linear-gradient(to right, #2563eb, #3b82f6);
+            background: linear-gradient(to right, #db2777, #ec4899);
+            transform: translateY(-1px);
+        }
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: #ec4899;
+            transition: width 0.3s ease;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e5e7eb;
+            color: #6b7280;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .step-circle.active {
+            background: #ec4899;
+            color: white;
+        }
+        .step-line {
+            flex: 1;
+            height: 4px;
+            background: #e5e7eb;
+            transition: background 0.3s ease;
+        }
+        .step-line.active {
+            background: #ec4899;
         }
     </style>
 </head>
 <body>
     <div class="container mx-auto p-6 max-w-3xl relative">
-        <!-- Header with decorative icon -->
-        <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-800 flex items-center justify-center gap-2">
-                <i class="fas fa-heart text-red-500"></i> Ứng Dụng Mai Mối
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-extrabold text-gray-900 flex items-center justify-center gap-3 animate-pulse">
+                <i class="fas fa-heart text-pink-500"></i> Ứng Dụng Mai Mối
             </h1>
-            <p class="text-gray-600 mt-2">Tìm kiếm một nửa hoàn hảo của bạn!</p>
+            <p class="text-gray-600 mt-3 text-lg">Hành trình tìm kiếm tình yêu của bạn bắt đầu từ đây!</p>
         </div>
 
-        <!-- Giai đoạn 1: Điền thông tin cá nhân -->
-        <div id="personal-info" class="card p-8 mb-8">
+        <!-- Progress Indicator -->
+        <div class="flex items-center justify-between mb-10">
+            <div class="step-circle active">1</div>
+            <div class="step-line" id="step2-line"></div>
+            <div class="step-circle" id="step2">2</div>
+            <div class="step-line" id="step3-line"></div>
+            <div class="step-circle" id="step3">3</div>
+        </div>
+        <div class="progress-bar mb-8">
+            <div class="progress-bar-fill" style="width: 33.33%"></div>
+        </div>
+
+        <!-- Giai đoạn 1 - Phần 1: Thông tin cơ bản -->
+        <div id="personal-info-part1" class="card p-8 mb-8">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                <i class="fas fa-user text-blue-500"></i> Giai đoạn 1: Thông tin cá nhân
+                <i class="fas fa-user text-pink-500"></i> Giai đoạn 1: Thông tin cơ bản
             </h2>
-            <div class="space-y-5">
-                <input id="name" type="text" placeholder="Họ và tên" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="age" type="number" placeholder="Tuổi" class="w-full p-3 border border-gray-300 rounded-lg">
-                <select id="gender" class="w-full p-3 border border-gray-300 rounded-lg">
+            <div class="space-y-6">
+                <input id="name" type="text" placeholder="Họ và tên" class="w-full p-3 rounded-lg">
+                <input id="age" type="number" placeholder="Tuổi" class="w-full p-3 rounded-lg">
+                <select id="gender" class="w-full p-3 rounded-lg">
                     <option value="">Giới tính</option>
                     <option value="male">Nam</option>
                     <option value="female">Nữ</option>
                     <option value="other">Khác</option>
                 </select>
-                <textarea id="bio" placeholder="Giới thiệu bản thân" class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
-                <!-- Bộ câu hỏi -->
-                <input id="birthdate" type="text" placeholder="Ngày tháng năm sinh ? (Định dạng: dd/mm/yyyy)" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="hometown" type="text" placeholder="Nơi sinh sống ? (Quê quán)" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="job" type="text" placeholder="Nghề nghiệp ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="income" type="text" placeholder="Thu nhập ? (Ví dụ: 10 triệu/tháng)" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="cccd" type="text" placeholder="Số CCCD ? (Nếu có thể cung cấp)" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="education" type="text" placeholder="Trình độ học vấn ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="marital_status" type="text" placeholder="Tình trạng hôn nhân ? (Độc thân, đã kết hôn, v.v.)" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="family" type="text" placeholder="Bạn đã từng có bao nhiêu mối tình ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="parents" type="text" placeholder="Bạn có mắc căn bệnh mãn tính, dị tật bẩm sinh gì hay không ?" class="w-full p-3 border border-gray-300 rounded-lg">
+                <textarea id="bio" placeholder="Giới thiệu bản thân (vài câu ngắn)" class="w-full p-3 rounded-lg h-24"></textarea>
+                <input id="birthdate" type="text" placeholder="Ngày tháng năm sinh (dd/mm/yyyy)" class="w-full p-3 rounded-lg">
+                <input id="hometown" type="text" placeholder="Quê quán" class="w-full p-3 rounded-lg">
+                <input id="job" type="text" placeholder="Nghề nghiệp" class="w-full p-3 rounded-lg">
                 <div class="w-full">
-                    <label for="portrait" class="block text-sm font-medium text-gray-700 mb-2">Ảnh chân dung ?</label>
-                    <input id="portrait" type="file" accept="image/*" class="w-full p-2 border border-gray-300 rounded-lg">
+                    <label for="portrait" class="block text-sm font-medium text-gray-700 mb-2">Ảnh chân dung</label>
+                    <input id="portrait" type="file" accept="image/*" class="w-full p-2 rounded-lg">
                 </div>
-                <input id="smoking" type="text" placeholder="Tôn giáo ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="drinking" type="text" placeholder="Dân tộc ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="height_weight" type="text" placeholder="Chiều cao, cân nặng ?" class="w-full p-3 border border-gray-300 rounded-lg">
-            
-                <input id="strengths" type="text" placeholder="Bạn tự đánh giá điểm mạnh của bản thân là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="weaknesses" type="text" placeholder="Điểm yếu của bạn là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="hobbies" type="text" placeholder="Sở thích, thú vui của bạn là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="partner_wishes" type="text" placeholder="Theo bạn, những mong muốn của bạn với nửa kia là gì ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <textarea id="philosophy" placeholder="Những triết lý, quan điểm của bạn trong hôn nhân, tình yêu và gia đình là gì ?" class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
-                <input id="habits" type="text" placeholder="Bạn có những thói quen đặc biệt nào mà mong muốn nửa kia chấp nhận (hút thuốc, ăn chay...) ?" class="w-full p-3 border border-gray-300 rounded-lg">
-                <textarea id="relationship_history" placeholder="Bạn đã từng trải qua mối quan hệ nghiêm túc chưa? Nếu có, bạn có thể chia sẻ cho chúng tôi một cách ngắn gọn lý do đổ vỡ hay không ?" class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
-                <select id="marriage_readiness" class="w-full p-3 border border-gray-300 rounded-lg">
-                    <option value="">Hiện tại, bạn đã sẵn sàng với hôn nhân hay chưa?</option>
+                <button onclick="nextToPart2()" class="w-full btn text-white p-3 rounded-lg font-semibold">Tiếp tục</button>
+            </div>
+        </div>
+
+        <!-- Giai đoạn 1 - Phần 2: Thông tin chi tiết -->
+        <div id="personal-info-part2" class="card p-8 mb-8 hidden">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-info-circle text-pink-500"></i> Giai đoạn 1: Thông tin chi tiết
+            </h2>
+            <div class="space-y-6">
+                <input id="income" type="text" placeholder="Thu nhập (VD: 10 triệu/tháng)" class="w-full p-3 rounded-lg">
+                <input id="cccd" type="text" placeholder="Số CCCD (nếu có)" class="w-full p-3 rounded-lg">
+                <input id="education" type="text" placeholder="Trình độ học vấn" class="w-full p-3 rounded-lg">
+                <input id="marital_status" type="text" placeholder="Tình trạng hôn nhân" class="w-full p-3 rounded-lg">
+                <input id="family" type="text" placeholder="Số mối tình đã có" class="w-full p-3 rounded-lg">
+                <input id="parents" type="text" placeholder="Có bệnh mãn tính hoặc dị tật bẩm sinh không?" class="w-full p-3 rounded-lg">
+                <input id="smoking" type="text" placeholder="Tôn giáo" class="w-full p-3 rounded-lg">
+                <input id="drinking" type="text" placeholder="Dân tộc" class="w-full p-3 rounded-lg">
+                <input id="height_weight" type="text" placeholder="Chiều cao, cân nặng" class="w-full p-3 rounded-lg">
+                <input id="strengths" type="text" placeholder="Điểm mạnh của bạn" class="w-full p-3 rounded-lg">
+                <input id="weaknesses" type="text" placeholder="Điểm yếu của bạn" class="w-full p-3 rounded-lg">
+                <input id="hobbies" type="text" placeholder="Sở thích, thú vui" class="w-full p-3 rounded-lg">
+                <input id="partner_wishes" type="text" placeholder="Mong muốn về nửa kia" class="w-full p-3 rounded-lg">
+                <textarea id="philosophy" placeholder="Quan điểm về tình yêu, hôn nhân, gia đình" class="w-full p-3 rounded-lg h-24"></textarea>
+                <input id="habits" type="text" placeholder="Thói quen đặc biệt (VD: hút thuốc, ăn chay)" class="w-full p-3 rounded-lg">
+                <textarea id="relationship_history" placeholder="Mối quan hệ nghiêm túc trước đây? Lý do đổ vỡ (nếu có)" class="w-full p-3 rounded-lg h-24"></textarea>
+                <select id="marriage_readiness" class="w-full p-3 rounded-lg">
+                    <option value="">Bạn sẵn sàng cho hôn nhân?</option>
                     <option value="1">Hoàn toàn chưa sẵn sàng</option>
                     <option value="2">Ít sẵn sàng</option>
                     <option value="3">Đang cân nhắc</option>
                     <option value="4">Gần như sẵn sàng</option>
                     <option value="5">Hoàn toàn sẵn sàng</option>
                 </select>
-                <textarea id="dream_partner" placeholder="Hãy mô tả nửa kia trong mơ của bạn." class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
-                <button onclick="submitPersonalInfo()" class="w-full btn text-white p-3 rounded-lg font-semibold">Gửi thông tin</button>
+                <textarea id="dream_partner" placeholder="Mô tả nửa kia trong mơ" class="w-full p-3 rounded-lg h-24"></textarea>
+                <div class="flex gap-4">
+                    <button onclick="backToPart1()" class="w-1/2 border-2 border-pink-500 text-pink-500 p-3 rounded-lg font-semibold hover:bg-pink-50">Quay lại</button>
+                    <button onclick="submitPersonalInfo()" class="w-1/2 btn text-white p-3 rounded-lg font-semibold">Gửi thông tin</button>
+                </div>
             </div>
         </div>
 
         <!-- Giai đoạn 2: Đặt lịch phỏng vấn -->
         <div id="interview-schedule" class="card p-8 mb-8 hidden">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                <i class="fas fa-calendar-check text-blue-500"></i> Giai đoạn 2: Đặt lịch phỏng vấn
+                <i class="fas fa-calendar-check text-pink-500"></i> Giai đoạn 2: Đặt lịch phỏng vấn
             </h2>
-            <div class="space-y-5">
-                <input id="interview-date" type="date" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="interview-time" type="time" class="w-full p-3 border border-gray-300 rounded-lg">
+            <div class="space-y-6">
+                <input id="interview-date" type="date" class="w-full p-3 rounded-lg">
+                <input id="interview-time" type="time" class="w-full p-3 rounded-lg">
                 <button onclick="scheduleInterview()" class="w-full btn text-white p-3 rounded-lg font-semibold">Xác nhận lịch phỏng vấn</button>
             </div>
         </div>
@@ -116,14 +178,14 @@
         <!-- Giai đoạn 3: Đặt lịch hẹn hò -->
         <div id="date-schedule" class="card p-8 mb-8 hidden">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                <i class="fas fa-heartbeat text-red-500"></i> Giai đoạn 3: Đặt lịch hẹn hò
+                <i class="fas fa-heartbeat text-pink-500"></i> Giai đoạn 3: Đặt lịch hẹn hò
             </h2>
-            <div class="space-y-5">
+            <div class="space-y-6">
                 <p class="text-gray-600 flex items-center gap-2">
-                    <i class="fas fa-map-marker-alt text-blue-500"></i> Địa điểm sẽ được chúng tôi sắp xếp sau.
+                    <i class="fas fa-map-marker-alt text-pink-500"></i> Địa điểm sẽ được chúng tôi sắp xếp sau.
                 </p>
-                <input id="date-date" type="date" class="w-full p-3 border border-gray-300 rounded-lg">
-                <input id="date-time" type="time" class="w-full p-3 border border-gray-300 rounded-lg">
+                <input id="date-date" type="date" class="w-full p-3 rounded-lg">
+                <input id="date-time" type="time" class="w-full p-3 rounded-lg">
                 <button onclick="scheduleDate()" class="w-full btn text-white p-3 rounded-lg font-semibold">Xác nhận lịch hẹn hò</button>
             </div>
         </div>
@@ -141,8 +203,32 @@
             setTimeout(() => notification.classList.add('hidden'), 3000);
         }
 
+        function nextToPart2() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const bio = document.getElementById('bio').value;
+            const birthdate = document.getElementById('birthdate').value;
+            const hometown = document.getElementById('hometown').value;
+            const job = document.getElementById('job').value;
+            const portrait = document.getElementById('portrait').files.length > 0;
+
+            if (name && age && gender && bio && birthdate && hometown && job && portrait) {
+                document.getElementById('personal-info-part1').classList.add('hidden');
+                document.getElementById('personal-info-part2').classList.remove('hidden');
+                document.querySelector('.progress-bar-fill').style.width = '33.33%';
+            } else {
+                showNotification('Vui lòng điền đầy đủ thông tin cơ bản và tải ảnh chân dung!', 'error');
+            }
+        }
+
+        function backToPart1() {
+            document.getElementById('personal-info-part2').classList.add('hidden');
+            document.getElementById('personal-info-part1').classList.remove('hidden');
+            document.querySelector('.progress-bar-fill').style.width = '33.33%';
+        }
+
         function submitPersonalInfo() {
-            console.log("Starting submitPersonalInfo");
             const name = document.getElementById('name').value;
             const age = document.getElementById('age').value;
             const gender = document.getElementById('gender').value;
@@ -170,19 +256,15 @@
             const marriage_readiness = document.getElementById('marriage_readiness').value;
             const dream_partner = document.getElementById('dream_partner').value;
 
-            console.log({
-                name, age, gender, bio, birthdate, hometown, job, income, cccd, education,
-                marital_status, family, parents, portrait, smoking, drinking, height_weight,
-                strengths, weaknesses, hobbies, partner_wishes, philosophy, habits,
-                relationship_history, marriage_readiness, dream_partner
-            });
-
             if (name && age && gender && bio && birthdate && hometown && job && income && cccd && education && marital_status && family && parents && portrait && smoking && drinking && height_weight && strengths && weaknesses && hobbies && partner_wishes && philosophy && habits && relationship_history && marriage_readiness && dream_partner) {
-                document.getElementById('personal-info').classList.add('hidden');
+                document.getElementById('personal-info-part2').classList.add('hidden');
                 document.getElementById('interview-schedule').classList.remove('hidden');
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step2-line').classList.add('active');
+                document.querySelector('.progress-bar-fill').style.width = '66.66%';
                 showNotification('Thông tin cá nhân đã được gửi thành công!', 'success');
             } else {
-                showNotification('Vui lòng điền đầy đủ thông tin, bao gồm tải lên ảnh chân dung!', 'error');
+                showNotification('Vui lòng điền đầy đủ thông tin chi tiết!', 'error');
             }
         }
 
@@ -193,6 +275,9 @@
             if (date && time) {
                 document.getElementById('interview-schedule').classList.add('hidden');
                 document.getElementById('date-schedule').classList.remove('hidden');
+                document.getElementById('step3').classList.add('active');
+                document.getElementById('step3-line').classList.add('active');
+                document.querySelector('.progress-bar-fill').style.width = '100%';
                 showNotification('Lịch phỏng vấn đã được đặt thành công!', 'success');
             } else {
                 showNotification('Vui lòng chọn ngày và giờ phỏng vấn!', 'error');
@@ -207,9 +292,14 @@
                 showNotification('Lịch hẹn hò đã được đặt thành công! Địa điểm sẽ được thông báo sau.', 'success');
                 setTimeout(() => {
                     document.getElementById('date-schedule').classList.add('hidden');
-                    document.getElementById('personal-info').classList.remove('hidden');
+                    document.getElementById('personal-info-part1').classList.remove('hidden');
                     document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
-                    document.getElementById('portrait').value = ''; // Reset file input
+                    document.getElementById('portrait').value = '';
+                    document.getElementById('step2').classList.remove('active');
+                    document.getElementById('step3').classList.remove('active');
+                    document.getElementById('step2-line').classList.remove('active');
+                    document.getElementById('step3-line').classList.remove('active');
+                    document.querySelector('.progress-bar-fill').style.width = '33.33%';
                 }, 2000);
             } else {
                 showNotification('Vui lòng chọn ngày và giờ hẹn hò!', 'error');
