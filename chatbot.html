@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Gợi Ý Trò Chuyện - MVP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #fef3f8 0%, #d6eaff 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
+        input {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+        input:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+        }
+        .btn {
+            background: linear-gradient(to right, #ec4899, #f472b6);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: linear-gradient(to right, #db2777, #ec4899);
+            transform: translateY(-1px);
+        }
+        .chat-message {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-6 max-w-3xl relative">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-extrabold text-gray-900 flex items-center justify-center gap-3 animate-pulse">
+                <i class="fas fa-comment-dots text-pink-500"></i> Chatbot Gợi Ý Trò Chuyện
+            </h1>
+            <p class="text-gray-600 mt-3 text-lg">Gợi ý trò chuyện dựa trên hồ sơ tâm lý của bạn!</p>
+        </div>
+
+        <!-- Form Nhập Tên -->
+        <div id="input-form" class="card p-8 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-user text-pink-500"></i> Nhập Tên Của Bạn
+            </h2>
+            <div class="space-y-6">
+                <input id="name" type="text" placeholder="Họ và tên" class="w-full p-3 rounded-lg">
+                <button onclick="generateSuggestions()" class="w-full btn text-white p-3 rounded-lg font-semibold">Nhận Gợi Ý</button>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div id="chat-container" class="card p-8 mb-8 hidden">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-comment-dots text-pink-500"></i> Gợi Ý Trò Chuyện
+            </h2>
+            <div id="chat-messages" class="space-y-4"></div>
+            <button onclick="resetForm()" class="w-full border-2 border-pink-500 text-pink-500 p-3 rounded-lg font-semibold hover:bg-pink-50 mt-6">Nhập Lại Tên</button>
+        </div>
+
+        <!-- Thông báo -->
+        <div id="notification" class="hidden p-4 rounded-lg text-white fixed bottom-4 right-4 shadow-lg"></div>
+    </div>
+
+    <script>
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `p-4 rounded-lg text-white fixed bottom-4 right-4 shadow-lg ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+            notification.classList.remove('hidden');
+            setTimeout(() => notification.classList.add('hidden'), 3000);
+        }
+
+        function generateSuggestions() {
+            const name = document.getElementById('name').value.trim() || "Bạn";
+
+            // Fixed psychological profile for all users
+            const userProfile = {
+                personality: "ambivert",
+                interests: "du lịch, âm nhạc, đọc sách",
+                mood: "neutral"
+            };
+
+            const { personality, interests, mood } = userProfile;
+
+            // Generate suggestions based on fixed profile
+            let topic = `${interests} hoặc các câu chuyện cân bằng giữa cá nhân và xã hội`;
+            let style = "linh hoạt, điều chỉnh theo phản hồi của đối phương, giữ giọng điệu trung tính, tập trung vào sở thích";
+
+            // Display chat message
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="chat-message">
+                    <p class="text-gray-800"><strong>Xin chào ${name}!</strong> Dựa trên hồ sơ tâm lý của bạn, đây là gợi ý:</p>
+                    <p class="text-gray-600 mt-2"><strong>Chủ đề trò chuyện:</strong> ${topic}</p>
+                    <p class="text-gray-600"><strong>Cách nói chuyện:</strong> ${style}</p>
+                </div>
+            `;
+
+            // Show chat container and hide form
+            document.getElementById('input-form').classList.add('hidden');
+            document.getElementById('chat-container').classList.remove('hidden');
+            showNotification('Gợi ý trò chuyện đã được tạo!', 'success');
+        }
+
+        function resetForm() {
+            document.getElementById('input-form').classList.remove('hidden');
+            document.getElementById('chat-container').classList.add('hidden');
+            document.getElementById('name').value = '';
+            document.getElementById('chat-messages').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
